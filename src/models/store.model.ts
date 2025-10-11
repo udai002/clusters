@@ -4,7 +4,7 @@ import type { IStore } from "../Types/store.type.js";
 const StoreSchema = new Schema<IStore>({
 
     clusterId:{
-         type:Schema.Types.ObjectId
+         type:String
     },
 
     inventryId:
@@ -15,13 +15,13 @@ const StoreSchema = new Schema<IStore>({
     storeType:
     {
         type:String,
-        enum:["mother_Store","mini_Store"]
+        enum:["mother_store","mini_store"]
     },
     storeName:
     {
         type:String
     },
-     locations:[{
+     locations:{
         lat:{
             type:Number , 
             required:true
@@ -30,10 +30,10 @@ const StoreSchema = new Schema<IStore>({
             type:Number , 
             required:true
         }
-    }] ,
+    } ,
     
     })
 
-const Store = mongoose.model("Clusters", StoreSchema)
+const Store = mongoose.model("newstores", StoreSchema)
 
 export default Store

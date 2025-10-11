@@ -6,6 +6,7 @@ import DBConnect from './config/dbConnect.js'
 import ErrorHandler from './middleware/ErrorHandler.js'
 import { connectRedisClient } from './config/RedisClient.js'
 import clusterRoutes from './routes/cluster.routes.js'
+import store from './routes/store.routes.js'
 
 dotenv.config()
 const port = process.env.PORT
@@ -20,6 +21,7 @@ app.use(cors({
 
 //routes
 app.use("/api/cluster" ,clusterRoutes)
+app.use("/api/store",store)
 
 app.use(ErrorHandler)
 

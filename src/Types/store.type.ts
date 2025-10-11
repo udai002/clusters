@@ -4,8 +4,8 @@ import type { Types } from "mongoose";
 
 
 export interface IStore extends Document , storeInput{
-    clusterId:Types.ObjectId ;
-    inventryId:Types.ObjectId ;
+    clusterId:string;
+    inventryId?:string;
     // storeId:Types.ObjectId ;  
 
 
