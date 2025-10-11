@@ -12,8 +12,9 @@ class clusterContollers{
     })
 
     CreateCluster=TryCatch(async (req , res)=>{
+        console.log(req.body)
         const parse = clusterValidation.safeParse(req.body)
-        if(!parse.success) throw new ApiError(parse.error.message , 401 , false)
+        if(!parse.success) throw new ApiError("validation failed" , 401 , false)
 
         const newCluster = await Cluster.create(parse.data)
 

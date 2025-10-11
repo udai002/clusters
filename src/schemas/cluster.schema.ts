@@ -5,11 +5,12 @@ export const clusterValidation = z.object({
     clusterId:z.string(),
     region:z.string() ,
     locations:z.array(z.object({
-        latitude:z.string(),
-        longitude:z.string()
+        lat:z.number(),
+        lng:z.number()
     })), 
-    storeIds:z.array(z.string()),
-    warehouse:z.string()
+    storeIds:z.array(z.string()).optional(),
+    warehouse:z.string().optional() , 
+    isAcitve:z.boolean().optional()
 })
 
 export type clusterInput = z.infer<typeof clusterValidation>
