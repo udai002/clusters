@@ -1,10 +1,11 @@
-import express from 'express'
-import StoreContollers from '../controllers/store.controller.js'
+import express from "express";
+import StoreContollers from "../controllers/store.controller.js";
 
-const router = express.Router()
-const storeActions = new StoreContollers()
+const router = express.Router();
+const storeActions = new StoreContollers();
 
-router.post('/create/:id' , storeActions.CreateStore)
-router.get('/get' , storeActions.getStores)
+router.post("/create/:id", storeActions.CreateStore);
+router.get("/get", storeActions.getStores);
+router.get("/search-store", storeActions.searchStores);
 
-export default router
+export default router;
