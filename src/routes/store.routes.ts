@@ -6,5 +6,7 @@ const storeActions = new StoreContollers()
 
 router.post('/create/:id' , storeActions.CreateStore)
 router.get('/get' , storeActions.getStores)
+router.delete('/delete/:id',storeActions.deleteStoreById)
+
 
 export default router
