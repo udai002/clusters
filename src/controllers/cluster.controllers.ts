@@ -4,21 +4,27 @@ import { clusterValidation } from "../schemas/cluster.schema.js";
 import ApiResponse from "../utils/ApiResponse.js";
 import TryCatch from "../utils/TryCatch.js";
 
-class clusterContollers {
-  getClusters = TryCatch(async (req, res) => {
-    const clustersData = await Cluster.find({});
-    res.json(new ApiResponse("Data Fetched successfully", 200, clustersData));
-  });
 
-  CreateCluster = TryCatch(async (req, res) => {
-    console.log(req.body);
-    const parse = clusterValidation.safeParse(req.body);
-    console.log("clusters body data",parse);
+  
+class clusterContollers{
+    
 
-    // if (!parse.success) throw new ApiError("validation failed", 401, false);
+    getClusters = TryCatch(async (req , res)=>{
+        const clustersData = await Cluster.find({})
+        res.json(new ApiResponse("Data Fetched successfully" , 200 , clustersData))
+    })
+    // create the cluster 
+    
 
-    const newCluster = await Cluster.create(parse.data);
+
+
+    CreateCluster=TryCatch(async (req , res)=>{
+        console.log(req.body)
+        const parse = clusterValidation.safeParse(req.body)
+        if(!parse.success) throw new ApiError( "validation failed",401 , false)
+        const newCluster = await Cluster.create(parse.data);
         console.log("clusters body data",newCluster);
+
 
 
     res.json(new ApiResponse("Cluster created successfully", 201, newCluster));
@@ -72,6 +78,7 @@ class clusterContollers {
 
     res.json(new ApiResponse("Data Fetched successfully", 200, clusterData));
   });
+
 }
 
 export default clusterContollers;

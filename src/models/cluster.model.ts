@@ -11,12 +11,12 @@ const clusterSchema = new Schema<clusterInput>({
         required:true
     } , 
     locations:[{
-        lat:{
-            type:Number , 
+        latitude:{
+            type:String , 
             required:true
         },
-        lng:{
-            type:Number , 
+        longitude:{
+            type:String , 
             required:true
         }
     }] ,
@@ -27,10 +27,6 @@ const clusterSchema = new Schema<clusterInput>({
     storeIds:[{type:String}] , 
     warehouse:{
         type:String
-    } , 
-    isAcitve:{
-        type:Boolean , 
-        default:false
     }
 })
 

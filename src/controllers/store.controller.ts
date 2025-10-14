@@ -1,43 +1,92 @@
-import { storevalidation } from "../schemas/store.schema.js";
-import ApiError from "../Error/ApiError.js";
-import store from "../models/store.model.js";
-import ApiResponse from "../utils/ApiResponse.js";
-import TryCatch from "../utils/TryCatch.js";
+import { storevalidation } from '../schemas/store.schema.js';
+import ApiError from '../Error/ApiError.js';
+import store from '../models/store.model.js';
+import ApiResponse from '../utils/ApiResponse.js';
+import TryCatch from '../utils/TryCatch.js';
 
-class storeControllers {
-  CreateStore = TryCatch(async (req, res) => {
-    console.log(req.body);
 
-    const parse = storevalidation.safeParse(req.body);
-    if (!parse.success) throw new ApiError("validation failed", 401, false);
+class storeControllers{
 
-    console.log("this is location of the store", parse);
+        CreateStore=TryCatch(async (req , res)=>{
+        console.log(req.body)
 
-    const { id } = req.params;
-    const formdata = { ...parse.data, clusterId: id };
-    console.log("cluster Id", id);
-    console.log("form data ", formdata);
+        const parse = storevalidation.safeParse(req.body)
+                if(!parse.success) throw new ApiError("validation failed" , 401 , false)
+                    
+        console.log("this is location of the store" , parse)
+        
+        const{id}=req.params
+        const formdata = {...parse.data , clusterId:id}
+        console.log("cluster Id",id)
+        console.log("form data ",formdata)
 
-    const newStore = await store.create(formdata);
 
-    res.json(new ApiResponse("Store created successfully", 201, newStore));
-  });
+        const newStore = await store.create(formdata)
 
-  getstoreById = TryCatch(async (req, res) => {
-    const storeData = await store.findById(req.params.id);
-    if (!storeData) {
-      throw new ApiError("store id is not found", 404, false);
-    }
+        res.json(new ApiResponse("Store created successfully" , 201 ,newStore ))
+        
+    })
 
-    res.json(new ApiResponse("Data Fetched successfully", 200, storeData));
-  });
 
-  getStores = TryCatch(async (req, res) => {
-    const storeData = await store.find({});
-    res.json(new ApiResponse("Data Fetched successfully", 200, storeData));
-  });
+    getstoreById=TryCatch(async(req,res)=>
+        {
+        const storeData=await store.findById( req.params.id)
+         if (!storeData)
+            {
+                throw new ApiError("store id is not found",404,false)
+            }
 
-  searchStores = TryCatch(async (req, res) => {
+        res.json( new ApiResponse("Data Fetched successfully",200 ,storeData))
+
+
+    })
+
+        getStores = TryCatch(async (req, res) => {
+        const storeData = await store.find({})
+        res.json(new ApiResponse("Data Fetched successfully", 200, storeData))
+
+    })
+
+
+
+    // Delete the store
+    deleteStores=TryCatch(async(req,res)=>{
+        const storeData=await store.findOneAndDelete({})
+        if (!storeData){
+            throw new ApiError("store id not found",404,false)
+
+        }
+
+        res.json(new ApiResponse("store deleted successfully",200,storeData))
+
+    })
+
+
+
+    // delete store by id
+    deleteStoreById=TryCatch(async(req,res)=>{
+        console.log(req.params.id)
+       
+        const storeData=await store.findByIdAndDelete(req.params.id)
+        if(!storeData){
+            throw new ApiError("store id not found",404,false)
+        }
+        
+        res.json(new ApiResponse("store deleted successfully",200, storeData))
+    })
+
+
+    // update store by id
+    updateStoreById=TryCatch(async(req,res)=>{
+        console.log("updating of store",req.body)
+
+
+    })
+
+
+
+
+ searchStores = TryCatch(async (req, res) => {
     const {
       search,
       page = 1,
@@ -72,7 +121,7 @@ class storeControllers {
     }
 
     res.json(new ApiResponse("Data Fetched successfully", 200, stores));
-  });
+  }
 }
 
 export default storeControllers;
