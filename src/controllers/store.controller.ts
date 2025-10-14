@@ -49,6 +49,43 @@ class storeControllers{
 
 
 
+    // Delete the store
+    deleteStores=TryCatch(async(req,res)=>{
+        const storeData=await store.findOneAndDelete({})
+        if (!storeData){
+            throw new ApiError("store id not found",404,false)
+
+        }
+
+        res.json(new ApiResponse("store deleted successfully",200,storeData))
+
+    })
+
+
+
+    // delete store by id
+    deleteStoreById=TryCatch(async(req,res)=>{
+        console.log(req.params.id)
+       
+        const storeData=await store.findByIdAndDelete(req.params.id)
+        if(!storeData){
+            throw new ApiError("store id not found",404,false)
+        }
+        
+        res.json(new ApiResponse("store deleted successfully",200, storeData))
+    })
+
+
+    // update store by id
+    updateStoreById=TryCatch(async(req,res)=>{
+        console.log("updating of store",req.body)
+
+
+    })
+
+
+
+
 }
 
 export default storeControllers;
