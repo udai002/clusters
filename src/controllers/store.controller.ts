@@ -86,6 +86,42 @@ class storeControllers{
 
 
 
+ searchStores = TryCatch(async (req, res) => {
+    const {
+      search,
+      page = 1,
+      limit = 6,
+      sortBy = "createdAt",
+      order = "desc",
+      ...filters
+    } = req.query;
+    let query = {};
+
+    if (search) {
+      query.$or = [{ storeName: { $regex: search, $options: "i" } }];
+    }
+
+    if (filters.supportType) {
+      query.supportType = filters.supportType;
+    }
+    console.log("stores", search);
+
+    const skip = (Number(page) - 1) * Number(limit);
+    const stores = await store
+      .find(query)
+      .sort({ [sortBy]: order === "desc" ? -1 : 1 })
+      .skip(Number(skip))
+      .limit(Number(limit));
+    const total = await store.countDocuments(query);
+
+    console.log("stores", stores);
+
+    if (!stores) {
+      throw new ApiError("failed to get data", 404, false);
+    }
+
+    res.json(new ApiResponse("Data Fetched successfully", 200, stores));
+  }
 }
 
 export default storeControllers;
