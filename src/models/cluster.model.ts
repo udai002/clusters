@@ -11,11 +11,11 @@ const clusterSchema = new Schema<clusterInput>({
         required:true
     } , 
     locations:[{
-        latitude:{
+        lat:{
             type:String , 
             required:true
         },
-        longitude:{
+        lng:{
             type:String , 
             required:true
         }

@@ -21,7 +21,8 @@ class clusterContollers{
     CreateCluster=TryCatch(async (req , res)=>{
         console.log(req.body)
         const parse = clusterValidation.safeParse(req.body)
-        if(!parse.success) throw new ApiError( "validation failed",401 , false)
+        console.log(parse.error)
+        if(!parse.success){ throw new ApiError( "validation failed",401 , false)}
         const newCluster = await Cluster.create(parse.data);
         console.log("clusters body data",newCluster);
 
@@ -35,13 +36,6 @@ class clusterContollers{
     console.log("id is params:", id);
 
     const deletedCluster = await Cluster.findByIdAndDelete(id );
-
-    // if(!deletedCluster)
-    // {
-    //   throw new ApiError("Error in delete user", 401, false);
-    // }
-    
-
     console.log("delete cluster", deletedCluster);
 
     res.json(
@@ -80,5 +74,7 @@ class clusterContollers{
   });
 
 }
+
+
 
 export default clusterContollers;
