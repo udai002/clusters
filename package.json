@@ -14,9 +14,14 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@bufbuild/protobuf": "^2.9.0",
+    "@grpc/grpc-js": "^1.14.0",
+    "@types/amqplib": "^0.10.7",
+    "amqplib": "^0.10.9",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
+    "mom-protos": "^1.0.7",
     "mongoose": "^8.19.1",
     "redis": "^5.8.3",
     "zod": "^4.1.12"

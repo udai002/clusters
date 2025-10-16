@@ -1,15 +1,16 @@
 import mongoose, { model, Schema } from "mongoose";
-import type { IStore } from "../Types/store.type.js";
+import type { IStore } from "../types/store.type.js";
 
 const StoreSchema = new Schema<IStore>({
 
     clusterId:{
-         type:String
+         type:String ,
+         required:true
     },
 
     inventryId:
     {
-        type:Schema.Types.ObjectId
+        type:Schema.Types.ObjectId , 
     },
 
     storeType:
@@ -19,7 +20,8 @@ const StoreSchema = new Schema<IStore>({
     },
     storeName:
     {
-        type:String
+        type:String , 
+        required:true
     },
      locations:{
         lat:{

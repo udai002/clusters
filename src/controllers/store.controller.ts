@@ -3,19 +3,20 @@ import ApiError from '../Error/ApiError.js';
 import store from '../models/store.model.js';
 import ApiResponse from '../utils/ApiResponse.js';
 import TryCatch from '../utils/TryCatch.js';
+import Store from '../models/store.model.js';
 
 
 class storeControllers{
 
         CreateStore=TryCatch(async (req , res)=>{
+          const{id}=req.params
         console.log(req.body)
 
         const parse = storevalidation.safeParse(req.body)
-                if(!parse.success) throw new ApiError("validation failed" , 401 , false)
+        if(!parse.success) throw new ApiError("validation failed" , 401 , false)
                     
         console.log("this is location of the store" , parse)
         
-        const{id}=req.params
         const formdata = {...parse.data , clusterId:id}
         console.log("cluster Id",id)
         console.log("form data ",formdata)
@@ -81,6 +82,15 @@ class storeControllers{
         console.log("updating of store",req.body)
 
 
+    })
+
+    getStoresByClusterId = TryCatch(async (req , res)=>{
+      const {id} = req.params
+
+      if(!id) throw new ApiError("Cluster is not defined" , 401, false)
+      
+      const stores = await Store.find({clusterId:id})
+      res.json(new ApiResponse("Fetching store data successful" , 200 , stores ))
     })
 
 

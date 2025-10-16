@@ -1,12 +1,13 @@
 import express from 'express'
 import dotenv from 'dotenv'
 import cors from 'cors'
-
 import DBConnect from './config/dbConnect.js'
 import ErrorHandler from './middleware/ErrorHandler.js'
 import { connectRedisClient } from './config/RedisClient.js'
 import clusterRoutes from './routes/cluster.routes.js'
 import store from './routes/store.routes.js'
+import getServer from './service/storeService.js'
+import grpc from '@grpc/grpc-js'
 
 dotenv.config()
 const port = process.env.PORT
@@ -18,6 +19,13 @@ app.use(cors({
     origin:"http://localhost:5173",
     credentials:true
 }))
+
+//
+const storeServer = getServer()
+storeServer.bindAsync("localhost:50051" , grpc.ServerCredentials.createInsecure() , (err , port)=>{
+    if(err)console.log(err)
+    console.log("GRPC server running at " , port)
+})
 
 //routes
 app.use("/api/cluster" ,clusterRoutes)
