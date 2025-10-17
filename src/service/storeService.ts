@@ -1,26 +1,22 @@
+import {Stores} from 'mom-protos'
+import grpc, { type ServerUnaryCall } from '@grpc/grpc-js'
+import Store from '../models/store.model.js'
 
-import type { sendUnaryData, ServerUnaryCall } from '@grpc/grpc-js'
-import { type storesDataServer , type StoreRequest , storeResponse } from 'mom-protos'
-import {storesDataService} from 'mom-protos'
-import grpc from '@grpc/grpc-js'
+// call -> request from client 
 
-
-// service functions
-function StoreService(call:ServerUnaryCall<StoreRequest , storeResponse>, callback:sendUnaryData<storeResponse>){
-    console.log("this si id we need the data" , call.request.storeId)
-   callback(null , {
-    storeName:"udai"
-   })
+async function storeDetails(call:ServerUnaryCall<Stores.StoreRequest , Stores.storeResponse> , callback:any){
+    const {storeId} = call.request
+    // const storeDetail = await Store.findOne({_id:storeId})
+    callback(null , {storeName:"Hyderabad store"})
 }
 
-// service server and connections
-function getServer(){
+function getStores(){
     var server = new grpc.Server()
-    server.addService(storesDataService , {
-        storeDetails:StoreService
+    server.addService(Stores.storesDataService  , {
+        storeDetails
     })
 
     return server
 }
 
-export default getServer
+export default getStores

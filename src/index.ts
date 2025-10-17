@@ -22,7 +22,7 @@ app.use(cors({
 
 //
 const storeServer = getServer()
-storeServer.bindAsync("localhost:50051" , grpc.ServerCredentials.createInsecure() , (err , port)=>{
+storeServer.bindAsync("localhost:5001" , grpc.ServerCredentials.createInsecure() , (err , port)=>{
     if(err)console.log(err)
     console.log("GRPC server running at " , port)
 })
