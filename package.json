@@ -21,7 +21,7 @@
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
-    "mom-protos": "^1.0.7",
+    "mom-protos": "^1.0.10",
     "mongoose": "^8.19.1",
     "redis": "^5.8.3",
     "zod": "^4.1.12"
